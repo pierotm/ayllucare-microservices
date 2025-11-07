@@ -20,11 +20,13 @@
       <module>gateway-service</module>
       <module>eureka-service</module>
       <module>config-service</module>
+      <module>iam-service</module>
   </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
+      <spring-cloud.version>2025.0.0</spring-cloud.version>
   </properties>
 
   <dependencies>
@@ -34,6 +36,18 @@
         <version>1.18.38</version>
     </dependency>
   </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
   <build>
       <pluginManagement>
