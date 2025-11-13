@@ -57,6 +57,15 @@ public interface UserCommandService {
     Optional<User> handle(RegisterDoctorCommand command);
 
     /**
+     * Handle register patient command.
+     *
+     * @param command the command containing patient email and password
+     * @return an optional of user if the patient registration was successful
+     */
+    Optional<User> handle(RegisterPatientCommand command);
+
+
+    /**
      * Delete a user by ID.
      *
      * @param userId the ID of the user to delete

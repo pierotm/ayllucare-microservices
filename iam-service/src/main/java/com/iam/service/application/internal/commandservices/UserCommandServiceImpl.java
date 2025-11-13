@@ -161,4 +161,39 @@ public class UserCommandServiceImpl implements UserCommandService {
 
         return Optional.of(savedUser);
     }
+
+    @Override
+    public Optional<User> handle(RegisterPatientCommand command) {
+        // Verificar si el email ya existe
+        if (userRepository.existsByEmail(command.email())) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        // Buscar el rol de paciente
+        var patientRole = roleRepository.findByName(Roles.ROLE_PATIENT)
+                .orElseThrow(() -> new RuntimeException("Patient role not found"));
+
+        // Crear el usuario paciente con password encriptado
+        var user = new User(
+                command.email(),
+                hashingService.encode(command.password())
+        );
+
+        user.addRole(patientRole);
+
+        // Guardar el usuario
+        var savedUser = userRepository.save(user);
+
+        // Publicar evento de usuario creado
+        try {
+            UserCreatedEvent event = new UserCreatedEvent(savedUser.getId(), savedUser.getEmail());
+            streamBridge.send("user-events", event);
+            log.info("User created event published for patient userId: {}", savedUser.getId());
+        } catch (Exception e) {
+            log.error("Failed to publish UserCreatedEvent for userId: {}", savedUser.getId(), e);
+        }
+
+        return Optional.of(savedUser);
+    }
+
 }
