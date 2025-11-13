@@ -2,7 +2,7 @@ package com.iam.service.domain.services;
 
 import com.iam.service.domain.model.aggregates.User;
 import com.iam.service.domain.model.queries.GetAllUsersQuery;
-import com.iam.service.domain.model.queries.GetCarriersByManagerQuery;
+import com.iam.service.domain.model.queries.GetDoctorsByManagerQuery;
 import com.iam.service.domain.model.queries.GetUserByEmailQuery;
 import com.iam.service.domain.model.queries.GetUserByIdQuery;
 
@@ -42,10 +42,10 @@ public interface UserQueryService {
     Optional<User> handle(GetUserByEmailQuery query);
 
     /**
-     * Handle get carriers by manager query.
+     * Handle get doctors by manager query.
      *
      * @param query the query containing the manager ID
-     * @return a list of users with carrier role created by the specified manager
+     * @return a list of users with doctor role created by the specified manager
      */
-    List<User> handle(GetCarriersByManagerQuery query);
+    List<User> handle(GetDoctorsByManagerQuery query);
 }

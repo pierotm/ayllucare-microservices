@@ -7,8 +7,7 @@ package com.iam.service.domain.model.valueobjects;
  * </p>
  */
 public enum Roles {
-    ROLE_ADMIN,
-    ROLE_CARRIER,
+    ROLE_DOCTOR,
     ROLE_MANAGER
 }
 

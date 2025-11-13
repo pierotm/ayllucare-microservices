@@ -2,7 +2,7 @@ package com.iam.service.application.internal.queryservices;
 
 import com.iam.service.domain.model.aggregates.User;
 import com.iam.service.domain.model.queries.GetAllUsersQuery;
-import com.iam.service.domain.model.queries.GetCarriersByManagerQuery;
+import com.iam.service.domain.model.queries.GetDoctorsByManagerQuery;
 import com.iam.service.domain.model.queries.GetUserByEmailQuery;
 import com.iam.service.domain.model.queries.GetUserByIdQuery;
 import com.iam.service.domain.model.valueobjects.Roles;
@@ -50,10 +50,10 @@ public class UserQueryServiceImpl implements UserQueryService {
 
     // inherited javadoc
     @Override
-    public List<User> handle(GetCarriersByManagerQuery query) {
+    public List<User> handle(GetDoctorsByManagerQuery query) {
         return userRepository.findAll().stream()
                 .filter(user ->
-                    user.getRoles().stream().anyMatch(role -> role.getName() == Roles.ROLE_CARRIER) &&
+                    user.getRoles().stream().anyMatch(role -> role.getName() == Roles.ROLE_DOCTOR) &&
                     user.getCreatedBy() != null &&
                     user.getCreatedBy().equals(query.managerId())
                 )

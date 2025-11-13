@@ -125,27 +125,27 @@ public class UserCommandServiceImpl implements UserCommandService {
     }
 
     @Override
-    public Optional<User> handle(RegisterCarrierCommand command) {
+    public Optional<User> handle(RegisterDoctorCommand command) {
         if (userRepository.existsByEmail(command.username())) {
             throw new RuntimeException("Email already exists");
         }
 
-        // Obtener los roles (asegurándonos que incluya ROLE_CARRIER)
+        // Obtener los roles (asegurándonos que incluya ROLE_DOCTOR)
         var roles = command.roles().stream()
                 .map(role -> roleRepository.findByName(role.getName())
                     .orElseThrow(() -> new RuntimeException("Role name not found")))
                 .collect(Collectors.toList());
 
-        // Verificar que al menos tenga el rol CARRIER
-        boolean hasCarrierRole = roles.stream()
-                .anyMatch(role -> role.getName() == Roles.ROLE_CARRIER);
+        // Verificar que al menos tenga el rol DOCTOR
+        boolean hasDoctorRole = roles.stream()
+                .anyMatch(role -> role.getName() == Roles.ROLE_DOCTOR);
 
-        if (!hasCarrierRole) {
-            roles.add(roleRepository.findByName(Roles.ROLE_CARRIER)
-                    .orElseThrow(() -> new RuntimeException("Carrier role not found")));
+        if (!hasDoctorRole) {
+            roles.add(roleRepository.findByName(Roles.ROLE_DOCTOR)
+                    .orElseThrow(() -> new RuntimeException("Doctor role not found")));
         }
 
-        // Crear el usuario carrier con referencia al manager que lo creó
+        // Crear el usuario doctor con referencia al manager que lo creó
         var user = new User(command.username(), hashingService.encode(command.password()), roles, command.managerId());
         var savedUser = userRepository.save(user);
 
@@ -153,7 +153,7 @@ public class UserCommandServiceImpl implements UserCommandService {
         try {
             UserCreatedEvent event = new UserCreatedEvent(savedUser.getId(), savedUser.getEmail());
             streamBridge.send("user-events", event);
-            log.info("User created event published for carrier userId: {}, created by manager: {}",
+            log.info("User created event published for doctor userId: {}, created by manager: {}",
                     savedUser.getId(), command.managerId());
         } catch (Exception e) {
             log.error("Failed to publish UserCreatedEvent for userId: {}", savedUser.getId(), e);

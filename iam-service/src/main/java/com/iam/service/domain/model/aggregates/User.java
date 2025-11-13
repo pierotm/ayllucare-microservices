@@ -74,7 +74,7 @@ public class User extends AuditableAbstractAggregateRoot<User> {
      * @param email the email
      * @param password the password
      * @param roles the roles
-     * @param createdBy the ID of the manager who created this user (for carriers)
+     * @param createdBy the ID of the manager who created this user (for doctors)
      */
     public User(String email, String password, List<Role> roles, Long createdBy) {
         this(email, password, roles);

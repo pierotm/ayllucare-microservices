@@ -49,12 +49,12 @@ public interface UserCommandService {
     Optional<User> handle(ChangeEmailCommand command);
 
     /**
-     * Handle register carrier command.
+     * Handle register doctor command.
      *
-     * @param command the command containing carrier details and manager ID
-     * @return an optional of user if the carrier registration was successful
+     * @param command the command containing doctor details and manager ID
+     * @return an optional of user if the doctor registration was successful
      */
-    Optional<User> handle(RegisterCarrierCommand command);
+    Optional<User> handle(RegisterDoctorCommand command);
 
     /**
      * Delete a user by ID.

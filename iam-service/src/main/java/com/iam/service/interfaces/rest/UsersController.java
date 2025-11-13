@@ -1,7 +1,7 @@
 package com.iam.service.interfaces.rest;
 
 import com.iam.service.domain.model.queries.GetAllUsersQuery;
-import com.iam.service.domain.model.queries.GetCarriersByManagerQuery;
+import com.iam.service.domain.model.queries.GetDoctorsByManagerQuery;
 import com.iam.service.domain.model.queries.GetUserByIdQuery;
 import com.iam.service.domain.services.UserCommandService;
 import com.iam.service.domain.services.UserQueryService;
@@ -81,23 +81,23 @@ public class UsersController {
     }
 
     /**
-     * Get all carriers for a manager.
+     * Get all doctors for a manager.
      *
-     * @param managerId The id of the manager to get carriers for.
-     * @return The list of carriers.
+     * @param managerId The id of the manager to get doctors for.
+     * @return The list of doctors.
      */
-    @GetMapping(value = "/managers/{managerId}/carriers")
-    @Operation(summary = "Get all carriers for a manager", description = "Get all carriers created by or associated with the specified manager.")
+    @GetMapping(value = "/managers/{managerId}/doctors")
+    @Operation(summary = "Get all doctors for a manager", description = "Get all doctors created by or associated with the specified manager.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Carriers retrieved successfully."),
+            @ApiResponse(responseCode = "200", description = "Doctors retrieved successfully."),
             @ApiResponse(responseCode = "401", description = "Unauthorized.")})
-    public ResponseEntity<List<UserResource>> getCarriersByManager(@PathVariable Long managerId) {
-        var getCarriersByManagerQuery = new GetCarriersByManagerQuery(managerId);
-        var carriers = userQueryService.handle(getCarriersByManagerQuery);
-        var carrierResources = carriers.stream()
+    public ResponseEntity<List<UserResource>> getDoctorsByManager(@PathVariable Long managerId) {
+        var getDoctorsByManagerQuery = new GetDoctorsByManagerQuery(managerId);
+        var doctors = userQueryService.handle(getDoctorsByManagerQuery);
+        var doctorResources = doctors.stream()
                 .map(UserResourceFromEntityAssembler::toResourceFromEntity)
                 .toList();
-        return ResponseEntity.ok(carrierResources);
+        return ResponseEntity.ok(doctorResources);
     }
 
     /**
