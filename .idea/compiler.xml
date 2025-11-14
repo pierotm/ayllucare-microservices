@@ -8,8 +8,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="eureka-service" />
-        <module name="gateway-service" />
         <module name="config-service" />
+        <module name="gateway-service" />
       </profile>
       <profile name="Annotation profile for ayllu-care-microservices" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -19,6 +19,7 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
         <module name="iam-service" />
+        <module name="profiles-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -28,6 +29,7 @@
       <module name="eureka-service" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
       <module name="iam-service" options="-parameters" />
+      <module name="profiles-service" options="-parameters" />
     </option>
   </component>
 </project>
